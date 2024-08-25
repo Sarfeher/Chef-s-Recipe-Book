@@ -33,8 +33,28 @@ if (!mongoose.Types.ObjectId.isValid(id)) {
 
 //create a recipe
 const createRecipe = async (req, res) => {
+    const { title, ingredients, instructions, cookingTime, imgURL } = req.body;
+
+    let emptyFields = [];
+    if (!title) {
+        emptyFields.push('title');
+    }
+    if (!ingredients) {
+        emptyFields.push('ingredients');
+    }
+    if (!instructions) {
+        emptyFields.push('instructions');
+    }
+    if (!cookingTime) {
+        emptyFields.push('cookingTime');
+    }
+
+    if(emptyFields.length > 0) {
+        return res.status(400).json({ error: 'Please fill in all fields', emptyFields });
+    }
+
     try {
-        const recipe = await Recipe.create(req.body);
+        const recipe = await Recipe.create({ title, ingredients, instructions, cookingTime, imgURL });
         if (!recipe) {
             return res.status(400).json({ error: 'Failed to create recipe' });
         }

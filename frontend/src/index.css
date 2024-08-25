@@ -1,7 +1,6 @@
 /* google font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
-/* layout */
 :root {
   --primary: rgb(107, 126, 180);
   --error: #e7195a;
@@ -31,10 +30,6 @@ header a {
   padding: 20px;
   margin: 0 auto;
 }
-img {
-  width: 600px; 
-  height: auto;   
-}
 
 .home {
   display: grid;
@@ -57,6 +52,7 @@ img {
 .recipe-details p {
   margin: 0;
   font-size: 0.9em;
+  padding: 1vh;
   color: #555;
 }
 .recipe-details span {
@@ -68,4 +64,38 @@ img {
   padding: 6px;
   border-radius: 50%;
   color: #333;
+}
+
+label, input {
+  display: block;
+}
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 15px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 1vh;
+}
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+input.error {
+  border: 1px solid var(--error);
 }
