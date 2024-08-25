@@ -33,7 +33,7 @@ header a {
 
 .home {
   display: grid;
-  grid-template-columns: 2fr 2fr;
+  grid-template-columns: 50% 50%;
   gap: 100px;
 }
 .recipe-details {
@@ -65,6 +65,17 @@ header a {
   border-radius: 50%;
   color: #333;
 }
+
+.recipe-details img {
+  width: 100%;
+  height: auto; 
+  border-radius: 8px;
+  object-fit: cover; 
+  margin: 16px 0;
+}
+
+
+ 
 
 label, input {
   display: block;
@@ -98,4 +109,26 @@ div.error {
 }
 input.error {
   border: 1px solid var(--error);
+}
+
+.navbar-logo {
+  width: 200px; 
+  height: auto; 
+  border-radius: 10px; 
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  margin-left: 20px; 
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.1);
+}
+
+.nav-slogan{
+  color: var(--primary);
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-slogan:hover {
+  transform: scale(1.1)
 }

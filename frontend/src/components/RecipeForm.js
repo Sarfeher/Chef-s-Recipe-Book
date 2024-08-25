@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const RecipeForm = () => {
     const [title, setTitle] = useState('');
     const [imgURL, setImgURL] = useState('');
-    const [ingredients, setIngredients] = useState('');
+    const [ingredients, setIngredients] = useState([]);
     const [instructions, setInstructions] = useState('');
     const [cookingTime, setCookingTime] = useState('');
     const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ const RecipeForm = () => {
         } else {
             setTitle('');
             setImgURL('');
-            setIngredients('');
+            setIngredients([]);
             setInstructions('');
             setCookingTime('');
             setEmptyFields([]);
@@ -50,7 +50,7 @@ const RecipeForm = () => {
                 if (response.ok) {
                     setTitle(json.title);
                     setImgURL(json.imgURL);
-                    setIngredients(json.ingredients.join(', '));
+                    setIngredients(json.ingredients);
                     setInstructions(json.instructions);
                     setCookingTime(json.cookingTime);
                 }
