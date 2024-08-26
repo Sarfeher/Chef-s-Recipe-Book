@@ -26,20 +26,23 @@ header a {
   text-decoration: none;
 }
 .pages{
-  max-width: 1400px;
-  padding: 20px;
-  margin: 0 auto;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-top: 2vw;
+
 }
 
-.home {
+.recipes{
   display: grid;
-  grid-template-columns: 50% 50%;
-  gap: 100px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2vw;
 }
+
 .recipe-details {
+  height: 60vh;
+  overflow: scroll;
   background: #fff;
   border-radius: 4px;
-  margin: 20px auto;
   padding: 20px;
   position: relative;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
@@ -68,7 +71,8 @@ header a {
 
 .recipe-details img {
   width: 100%;
-  height: auto; 
+  height: 35vh;
+  object-fit: contain;
   border-radius: 8px;
   object-fit: cover; 
   margin: 16px 0;
