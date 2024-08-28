@@ -6,12 +6,12 @@
   --error: #e7195a;
 }
 body {
-  background: #f1f1f1;
+  background: rgb(244, 244, 244);
   margin: 0;
   font-family: "Poppins";
 }
 header {
-  background: #fff;
+  background: rgb(255, 255, 255);
 }
 header .container {
   max-width: 1400px;
@@ -39,6 +39,24 @@ header a {
 }
 
 .recipe-details {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  height: 60vh;
+  overflow: scroll;
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+.recipe-details:hover{
+  transform: scale(1.06);
+
+}
+
+.recipe-details-long {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
   height: 60vh;
   overflow: scroll;
   background: #fff;
@@ -47,6 +65,7 @@ header a {
   position: relative;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
 }
+
 .recipe-details h4 {
   margin: 0 0 10px 0;
   font-size: 1.2em;
@@ -70,6 +89,36 @@ header a {
 }
 
 .recipe-details img {
+  width: 100%;
+  height: 35vh;
+  object-fit: contain;
+  border-radius: 8px;
+  object-fit: cover; 
+  margin: 16px 0;
+}
+.recipe-details-long h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+.recipe-details-long p {
+  margin: 0;
+  font-size: 0.9em;
+  padding: 1vh;
+  color: #555;
+}
+.recipe-details-long span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+}
+
+.recipe-details-long img {
   width: 100%;
   height: 35vh;
   object-fit: contain;
@@ -103,6 +152,8 @@ button {
   cursor: pointer;
   margin: 1vh;
 }
+
+
 div.error {
   padding: 10px;
   background: #ffefef;
@@ -130,9 +181,5 @@ input.error {
 
 .nav-slogan{
   color: var(--primary);
-  transition: transform 0.3s ease-in-out;
 }
 
-.nav-slogan:hover {
-  transform: scale(1.1)
-}

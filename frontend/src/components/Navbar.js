@@ -5,7 +5,7 @@ const Navbar = () => {
         <header>
             <div className="container">
                 <Link to="/">
-                <img src="/bytes1.png" alt="Bytes & Bites Logo" className="navbar-logo"  />
+                <img src="/bytes2.png" alt="Bytes & Bites Logo" className="navbar-logo"  />
                 </Link>
                 <h3 className="nav-slogan">Where Digital Flavors Meet Delicious Creations</h3>
                 <Link to="/create"><button>Add recipe</button></Link>
