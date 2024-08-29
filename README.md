@@ -3,6 +3,7 @@
 ![bytes1](https://github.com/user-attachments/assets/d8a9d430-f125-41d5-b16f-6c0f906ceb8d)
 
 **Bytes & Bites** is a full-stack MERN application that allows users to create, update, and manage their favorite recipes. The app features a user-friendly interface for adding new recipes, editing existing ones, and viewing recipe details, all while ensuring seamless data handling and a smooth user experience. Now with Docker support for streamlined development and deployment.
+<img width="1678" alt="Képernyőfotó 2024-08-29 - 8 54 33" src="https://github.com/user-attachments/assets/2320f47c-a10a-4f1e-9aef-1f2e852472e7">
 
 ## Table of Contents
 
