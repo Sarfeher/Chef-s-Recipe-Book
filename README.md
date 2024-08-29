@@ -1,14 +1,16 @@
 # Bytes & Bites
- ![bytes1](https://github.com/user-attachments/assets/d8a9d430-f125-41d5-b16f-6c0f906ceb8d)
 
+![bytes1](https://github.com/user-attachments/assets/d8a9d430-f125-41d5-b16f-6c0f906ceb8d)
 
-**Bytes & Bites** is a full-stack MERN application that allows users to create, update, and manage their favorite recipes. The app features a user-friendly interface for adding new recipes, editing existing ones, and viewing recipe details, all while ensuring seamless data handling and a smooth user experience.
+**Bytes & Bites** is a full-stack MERN application that allows users to create, update, and manage their favorite recipes. The app features a user-friendly interface for adding new recipes, editing existing ones, and viewing recipe details, all while ensuring seamless data handling and a smooth user experience. Now with Docker support for streamlined development and deployment.
+<img width="1678" alt="Képernyőfotó 2024-08-29 - 8 54 33" src="https://github.com/user-attachments/assets/2320f47c-a10a-4f1e-9aef-1f2e852472e7">
 
 ## Table of Contents
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
+- [Docker Setup](#docker-setup)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
 
@@ -20,6 +22,7 @@
 - **Form Validation**: Ensures all necessary fields are filled out.
 - **API Integration**: Connects with a backend API for CRUD operations.
 - **State Management**: Efficient state handling using React hooks.
+- **Dockerized Deployment**: Easily run the application in isolated containers using Docker.
 
 ## Tech Stack
 
@@ -30,6 +33,7 @@
 - **Mongoose**: ODM for MongoDB.
 - **React Router**: For handling client-side routing.
 - **CSS**: Styling the frontend.
+- **Docker**: Containerization platform for consistent development and deployment environments.
 
 ## Installation
 
@@ -39,14 +43,15 @@ Ensure you have the following installed on your system:
 
 - [Node.js](https://nodejs.org/en/)
 - [MongoDB](https://www.mongodb.com/try/download/community)
+- [Docker](https://www.docker.com/get-started) (if using Docker)
 
 ### Steps
 
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/your-username/bytes-and-bites.git
-   cd bytes-and-bites
+   git clone https://github.com/Sarfeher/Chef-s-Recipe-Book
+   cd Chef-s-Recipe-Book
    ```
 
 2. **Install Dependencies**
@@ -94,6 +99,35 @@ Ensure you have the following installed on your system:
 
    Visit `http://localhost:3000` in your browser to start using the app.
 
+## Docker Setup
+
+### Prerequisites
+
+Ensure you have Docker installed on your system.
+
+### Steps
+
+1. **Start Containers**
+   
+   Run the containers:
+
+   ```bash
+   cd Chef-s-Recipe-Book
+   docker-compose up
+   ```
+
+3. **Access the Application**
+
+   Visit `http://localhost:3000` in your browser to use the app.
+
+4. **Stop Containers**
+
+   To stop the containers, run:
+
+   ```bash
+   docker-compose down
+   ```
+
 ## Usage
 
 - **Add a Recipe**: Navigate to the "Add Recipe" page, fill out the form with recipe details, and submit.
@@ -109,3 +143,7 @@ Ensure you have the following installed on your system:
 - **DELETE /api/recipes/:id**: Delete a recipe by ID.
 
 [Create React App](https://github.com/facebook/create-react-app)
+
+---
+
+This description now includes Docker setup instructions, ensuring your project can be easily containerized and run consistently across different environments.
