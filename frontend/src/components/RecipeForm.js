@@ -13,6 +13,11 @@ const RecipeForm = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    const deleteIngredient = (ingredientToDelete) => {
+        setIngredients(ingredients.filter((ingredient) => ingredient !== ingredientToDelete));
+    }
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const recipe = { title, imgURL, ingredients, instructions, cookingTime };
@@ -84,7 +89,7 @@ const RecipeForm = () => {
             <label>Ingredients:</label>
             <ul>
                 {ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}<button className="material-symbols-outlined">Delete</button> </li>
+                    <li key={index}>{ingredient}<button className="material-symbols-outlined" onClick={() => deleteIngredient(ingredient)}>Delete</button> </li>
                 ))}
             </ul>
             <input

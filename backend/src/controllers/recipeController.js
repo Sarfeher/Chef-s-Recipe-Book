@@ -84,7 +84,6 @@ const updateRecipe = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'Invalid recipe ID' });
     }
-
     try {
         const recipe = await Recipe.findByIdAndUpdate(id, req.body, { new: true });
         if (!recipe) {
