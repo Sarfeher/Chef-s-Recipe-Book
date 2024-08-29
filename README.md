@@ -24,16 +24,26 @@
 - **State Management**: Efficient state handling using React hooks.
 - **Dockerized Deployment**: Easily run the application in isolated containers using Docker.
 
+
+
 ## Tech Stack
 
-- **MongoDB**: Database for storing recipe data.
-- **Express.js**: Backend framework for building RESTful APIs.
-- **React.js**: Frontend library for creating a dynamic user interface.
-- **Node.js**: Server-side runtime environment.
-- **Mongoose**: ODM for MongoDB.
-- **React Router**: For handling client-side routing.
-- **CSS**: Styling the frontend.
-- **Docker**: Containerization platform for consistent development and deployment environments.
+- ![Static Badge](https://img.shields.io/badge/MongoDB-%2347A248?style=for-the-badge&logo=mongodb&logoColor=white)
+ Database for storing recipe data.
+- ![Static Badge](https://img.shields.io/badge/Express-%23000000?style=for-the-badge&logo=express&logoColor=white)
+ Backend framework for building RESTful APIs.
+- ![Static Badge](https://img.shields.io/badge/React-blue?style=for-the-badge&logo=react&logoColor=white)
+ Frontend library for creating a dynamic user interface.
+- ![Static Badge](https://img.shields.io/badge/Node.js-%235FA04E?style=for-the-badge&logo=nodedotjs&logoColor=white)
+ Server-side runtime environment.
+- ![Static Badge](https://img.shields.io/badge/Mongoose-%23880000?style=for-the-badge&logo=mongoose&logoColor=white)
+ ODM for MongoDB.
+- ![Static Badge](https://img.shields.io/badge/React_router-%23CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)
+ For handling client-side routing.
+- ![Static Badge](https://img.shields.io/badge/CSS-%231572B6?style=for-the-badge&logo=css3&logoColor=white)
+ Styling the frontend.
+- ![Static Badge](https://img.shields.io/badge/Docker-%232496ED?style=for-the-badge&logo=docker&logoColor=white)
+ Containerization platform for consistent development and deployment environments.
 
 ## Installation
 
@@ -141,9 +151,5 @@ Ensure you have Docker installed on your system.
 - **POST /api/recipes**: Add a new recipe.
 - **PATCH /api/recipes/:id**: Update an existing recipe by ID.
 - **DELETE /api/recipes/:id**: Delete a recipe by ID.
-
 [Create React App](https://github.com/facebook/create-react-app)
 
----
-
-This description now includes Docker setup instructions, ensuring your project can be easily containerized and run consistently across different environments.
