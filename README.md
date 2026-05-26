@@ -1,5 +1,7 @@
 # Bytes & Bites
 
+[![Tests](https://github.com/Sarfeher/Chef-s-Recipe-Book/actions/workflows/test.yml/badge.svg)](https://github.com/Sarfeher/Chef-s-Recipe-Book/actions/workflows/test.yml)
+
 ![bytes1](https://github.com/user-attachments/assets/d8a9d430-f125-41d5-b16f-6c0f906ceb8d)
 
 **Bytes & Bites** is a full-stack MERN application that allows users to create, update, and manage their favorite recipes. The app features a user-friendly interface for adding new recipes, editing existing ones, and viewing recipe details, all while ensuring seamless data handling and a smooth user experience. Now with Docker support for streamlined development and deployment.
