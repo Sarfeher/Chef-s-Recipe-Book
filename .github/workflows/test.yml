@@ -7,7 +7,7 @@ on:
 
 jobs:
   playwright:
-    name: Playwright API tests
+    name: Playwright tests
     runs-on: ubuntu-latest
 
     steps:
@@ -41,6 +41,24 @@ jobs:
       - name: Install test dependencies
         working-directory: tests
         run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: tests
+        run: npx playwright install --with-deps chromium
+
+      - name: Wait for frontend to be reachable
+        run: |
+          for i in {1..30}; do
+            if curl -fs http://localhost:3000 > /dev/null; then
+              echo "Frontend is up"
+              exit 0
+            fi
+            echo "Waiting for frontend... ($i/30)"
+            sleep 2
+          done
+          echo "Frontend did not become reachable in time"
+          docker compose logs frontend
+          exit 1
 
       - name: Run Playwright tests
         working-directory: tests
