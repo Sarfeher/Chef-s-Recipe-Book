@@ -166,12 +166,65 @@ input.error {
   border: 1px solid var(--error);
 }
 
+.button-danger {
+  background: var(--error);
+}
+.button-danger:hover {
+  filter: brightness(1.1);
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  width: min(420px, 90vw);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  font-family: "Poppins";
+}
+
+.modal h3 {
+  margin: 0 0 12px 0;
+  color: var(--primary);
+}
+
+.modal p {
+  margin: 0 0 20px 0;
+  color: #555;
+  line-height: 1.4;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.modal-cancel {
+  background: #ddd;
+  color: #333;
+}
+
+.modal-confirm {
+  background: var(--error);
+  color: #fff;
+}
+
 .navbar-logo {
-  width: 200px; 
-  height: auto; 
-  border-radius: 10px; 
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
-  margin-left: 20px; 
+  width: 200px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-left: 20px;
   transition: transform 0.3s ease-in-out;
 }
 
