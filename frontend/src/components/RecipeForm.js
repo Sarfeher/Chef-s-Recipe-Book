@@ -10,13 +10,42 @@ const RecipeForm = () => {
     const [cookingTime, setCookingTime] = useState('');
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
+    const [uploading, setUploading] = useState(false);
+    const [uploadError, setUploadError] = useState(null);
     const navigate = useNavigate();
     const { id } = useParams();
 
     const deleteIngredient = (ingredientToDelete) => {
         setIngredients(ingredients.filter((ingredient) => ingredient !== ingredientToDelete));
-    }
+    };
 
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        setUploadError(null);
+        setUploading(true);
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        try {
+            const response = await fetch('/api/uploads', {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                setUploadError(data.error || 'Upload failed');
+            } else {
+                setImgURL(data.url);
+            }
+        } catch (err) {
+            setUploadError('Upload failed: ' + err.message);
+        } finally {
+            setUploading(false);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,9 +77,6 @@ const RecipeForm = () => {
         }
     };
 
-
-
-
     useEffect(() => {
         if (id) {
             const fetchRecipe = async () => {
@@ -80,12 +106,30 @@ const RecipeForm = () => {
                 value={title}
                 className={emptyFields.includes('title') ? 'error' : ''}
             />
+
             <label>Picture URL:</label>
             <input
                 type="text"
                 onChange={(e) => setImgURL(e.target.value)}
                 value={imgURL}
+                placeholder="Paste an image URL, or upload below"
             />
+
+            <label>Or upload an image:</label>
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                data-testid="image-upload"
+            />
+            {uploading && <p className="upload-status">Uploading...</p>}
+            {uploadError && <p className="upload-status upload-error">{uploadError}</p>}
+            {imgURL && !uploading && (
+                <div className="image-preview">
+                    <img src={imgURL} alt="Preview" />
+                </div>
+            )}
+
             <label>Ingredients:</label>
             <ul>
                 {ingredients.map((ingredient, index) => (
