@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const recipesRoutes = require('./routes/recipes');
+const uploadsRoutes = require('./routes/uploads');
 const mongoose = require('mongoose');
 
 //express app
@@ -15,8 +16,12 @@ app.use((req, res, next) => {
     next();
 });
 
+//serve uploaded images
+app.use('/uploads', express.static('/app/uploads'));
+
 //routes
 app.use('/api/recipes', recipesRoutes);
+app.use('/api/uploads', uploadsRoutes);
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)
