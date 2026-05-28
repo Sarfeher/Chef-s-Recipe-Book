@@ -1,32 +1,28 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 const path = require('path');
+const { RecipeFormPage } = require('../pages/RecipeFormPage');
+const { API, deleteRecipe } = require('../helpers/api');
 
-const API = process.env.API_BASE_URL || 'http://localhost:4000';
 const FIXTURE_IMAGE = path.join(__dirname, '..', 'fixtures', 'test-image.jpg');
 
 test.describe('Image upload on the recipe form', () => {
   test('selecting a file uploads it and shows a preview', async ({ page }) => {
-    await page.goto('/create');
+    const form = new RecipeFormPage(page);
+    await form.gotoCreate();
 
-    await page.getByTestId('image-upload').setInputFiles(FIXTURE_IMAGE);
+    await form.uploadImage(FIXTURE_IMAGE);
+    const src = await form.waitForPreview();
 
-    // Preview image becomes visible once the upload finishes
-    const preview = page.locator('.image-preview img');
-    await expect(preview).toBeVisible({ timeout: 10_000 });
-
-    // Preview src points at our backend's /uploads path
-    const src = await preview.getAttribute('src');
     expect(src).toMatch(/^\/uploads\/.+\.jpg$/);
   });
 
   test('uploaded image is reachable and persists with the new recipe', async ({ page, request }) => {
-    await page.goto('/create');
+    const form = new RecipeFormPage(page);
+    await form.gotoCreate();
 
-    await page.getByTestId('image-upload').setInputFiles(FIXTURE_IMAGE);
-    const preview = page.locator('.image-preview img');
-    await expect(preview).toBeVisible({ timeout: 10_000 });
-    const uploadedUrl = await preview.getAttribute('src');
+    await form.uploadImage(FIXTURE_IMAGE);
+    const uploadedUrl = await form.waitForPreview();
 
     // The image is actually served by the backend
     const imgResponse = await request.get(`${API}${uploadedUrl}`);
@@ -35,14 +31,13 @@ test.describe('Image upload on the recipe form', () => {
 
     // Fill the rest of the form and submit
     const title = `Upload test recipe ${Date.now()}`;
-    await page.locator('input').nth(0).fill(title);          // title
-    // skip Picture URL (it's already populated by the upload)
-    await page.locator('input').nth(3).fill('test ingredient'); // ingredient
-    await page.getByRole('button', { name: 'Add Ingredient' }).click();
-    await page.locator('input').nth(4).fill('Stir and serve.'); // instructions
-    await page.locator('input[type="number"]').fill('5');       // cooking time
-
-    await page.getByRole('button', { name: 'Save Recipe' }).click();
+    await form.fill({
+      title,
+      ingredient: 'test ingredient',
+      instructions: 'Stir and serve.',
+      cookingTime: 5,
+    });
+    await form.submit();
     await page.waitForURL('**/');
 
     // The new recipe is in the API and its imgURL points at our upload
@@ -52,20 +47,20 @@ test.describe('Image upload on the recipe form', () => {
     expect(created).toBeTruthy();
     expect(created.imgURL).toBe(uploadedUrl);
 
-    await request.delete(`${API}/api/recipes/${created._id}`);
+    await deleteRecipe(request, created._id);
   });
 
   test('non-image files are rejected with an error message', async ({ page }) => {
-    await page.goto('/create');
+    const form = new RecipeFormPage(page);
+    await form.gotoCreate();
 
-    // Create an in-memory text file and try to upload it
-    await page.getByTestId('image-upload').setInputFiles({
+    await form.uploadImage({
       name: 'not-an-image.txt',
       mimeType: 'text/plain',
       buffer: Buffer.from('hello world'),
     });
 
-    await expect(page.locator('.upload-error')).toBeVisible({ timeout: 10_000 });
-    await expect(page.locator('.image-preview img')).toHaveCount(0);
+    await expect(form.uploadError).toBeVisible({ timeout: 10_000 });
+    await expect(form.preview).toHaveCount(0);
   });
 });
