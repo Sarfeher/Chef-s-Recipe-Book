@@ -25,6 +25,20 @@ class RecipeFormPage {
     this.saveButton = page.getByTestId('save-recipe-button');
     this.preview = page.locator('.image-preview img');
     this.uploadError = page.locator('.upload-error');
+    this.errorMessage = page.locator('form.create > div.error');
+  }
+
+  /** @param {'title'|'ingredients'|'instructions'|'cookingTime'} field */
+  fieldHasError(field) {
+    const testIdByField = {
+      title: 'recipe-title-input',
+      ingredients: 'ingredient-input',
+      instructions: 'instructions-input',
+      cookingTime: 'cooking-time-input',
+    };
+    return this.page.getByTestId(testIdByField[field]).evaluate(
+      (el) => el.classList.contains('error'),
+    );
   }
 
   async gotoCreate() {
