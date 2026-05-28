@@ -53,12 +53,16 @@ const createRecipe = async (req, res) => {
         return res.status(400).json({ error: 'Please fill in all fields', emptyFields });
     }
 
+    if (!Array.isArray(ingredients)) {
+        return res.status(400).json({ error: 'ingredients must be an array of strings' });
+    }
+
     try {
         const recipe = await Recipe.create({ title, ingredients, instructions, cookingTime, imgURL });
         if (!recipe) {
             return res.status(400).json({ error: 'Failed to create recipe' });
         }
-        res.status(200).json(recipe);
+        res.status(201).json(recipe);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
