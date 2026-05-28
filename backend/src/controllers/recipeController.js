@@ -33,7 +33,7 @@ if (!mongoose.Types.ObjectId.isValid(id)) {
 
 //create a recipe
 const createRecipe = async (req, res) => {
-    const { title, ingredients, instructions, cookingTime, imgURL } = req.body;
+    const { title, ingredients, instructions, cookingTime, servings, imgURL } = req.body;
 
     let emptyFields = [];
     if (!title) {
@@ -58,7 +58,7 @@ const createRecipe = async (req, res) => {
     }
 
     try {
-        const recipe = await Recipe.create({ title, ingredients, instructions, cookingTime, imgURL });
+        const recipe = await Recipe.create({ title, ingredients, instructions, cookingTime, servings, imgURL });
         if (!recipe) {
             return res.status(400).json({ error: 'Failed to create recipe' });
         }

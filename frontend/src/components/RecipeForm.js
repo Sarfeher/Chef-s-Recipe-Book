@@ -8,6 +8,7 @@ const RecipeForm = () => {
     const [ingredientsInput, setIngredientsInput] = useState('');
     const [instructions, setInstructions] = useState('');
     const [cookingTime, setCookingTime] = useState('');
+    const [servings, setServings] = useState(4);
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
     const [uploading, setUploading] = useState(false);
@@ -49,7 +50,7 @@ const RecipeForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const recipe = { title, imgURL, ingredients, instructions, cookingTime };
+        const recipe = { title, imgURL, ingredients, instructions, cookingTime, servings };
 
         const response = await fetch(`/api/recipes/${id ? id : ''}`, {
             method: id ? 'PATCH' : 'POST',
@@ -89,6 +90,7 @@ const RecipeForm = () => {
                     setIngredients(json.ingredients);
                     setInstructions(json.instructions);
                     setCookingTime(json.cookingTime);
+                    if (typeof json.servings === 'number') setServings(json.servings);
                 }
             };
 
@@ -171,6 +173,16 @@ const RecipeForm = () => {
                 className={emptyFields.includes('cookingTime') ? 'error' : ''}
                 data-testid="cooking-time-input"
             />
+
+            <label>Servings:</label>
+            <input
+                type="number"
+                onChange={(e) => setServings(Number(e.target.value))}
+                value={servings}
+                min={1}
+                data-testid="servings-input"
+            />
+
             <button data-testid="save-recipe-button">{id ? 'Update Recipe' : 'Save Recipe'}</button>
             {error && <div className="error">{error}</div>}
         </form>

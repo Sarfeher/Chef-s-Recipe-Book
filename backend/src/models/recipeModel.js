@@ -19,6 +19,11 @@ const recipeSchema = new Schema({
         type: Number,
         required: true
     },
+    servings: {
+        type: Number,
+        required: false,
+        default: 4
+    },
     imgURL: {
         type: String,
         required: false
