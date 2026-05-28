@@ -8,13 +8,10 @@
 // Run it normally (fast, headless — what CI does):
 //   npx playwright test specs/recipe-journey.ui.spec.js
 
-const { test, expect } = require('@playwright/test');
-const { HomePage } = require('../pages/HomePage');
-const { RecipePage } = require('../pages/RecipePage');
-const { RecipeFormPage } = require('../pages/RecipeFormPage');
+const { test, expect } = require('../fixtures');
 
 test.describe('Recipe lifecycle through the UI', () => {
-  test('create, view, edit, then delete a recipe', async ({ page }) => {
+  test('create, view, edit, then delete a recipe', async ({ page, home, recipe, form }) => {
     const stamp = Date.now();
     const originalTitle = `Journey recipe ${stamp}`;
     const updatedTitle = `Journey recipe ${stamp} (edited)`;
@@ -23,10 +20,6 @@ test.describe('Recipe lifecycle through the UI', () => {
     const cookingTime = 12;
     const updatedCookingTime = 25;
     const pictureUrl = `https://loremflickr.com/600/400/food?lock=${stamp}`;
-
-    const home = new HomePage(page);
-    const recipe = new RecipePage(page);
-    const form = new RecipeFormPage(page);
 
     // 1. Start on the homepage and open the create form
     await home.goto();

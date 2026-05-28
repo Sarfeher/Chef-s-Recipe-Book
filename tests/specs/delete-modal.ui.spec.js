@@ -1,13 +1,11 @@
 // @ts-check
-const { test, expect } = require('@playwright/test');
-const { RecipePage } = require('../pages/RecipePage');
+const { test, expect } = require('../fixtures');
 const { createRecipe, deleteRecipe, getRecipe } = require('../helpers/api');
 
 test.describe('Delete recipe with confirmation modal', () => {
-  test('clicking delete opens the modal — cancel closes it and keeps the recipe', async ({ page, request }) => {
+  test('clicking delete opens the modal — cancel closes it and keeps the recipe', async ({ page, recipe, request }) => {
     const { _id } = await createRecipe(request, { title: 'Delete cancel test' });
 
-    const recipe = new RecipePage(page);
     await recipe.goto(_id);
     await recipe.openDeleteModal();
 
@@ -27,10 +25,9 @@ test.describe('Delete recipe with confirmation modal', () => {
     await deleteRecipe(request, _id);
   });
 
-  test('clicking confirm in the modal deletes the recipe and returns to homepage', async ({ page, request }) => {
+  test('clicking confirm in the modal deletes the recipe and returns to homepage', async ({ page, recipe, request }) => {
     const { _id } = await createRecipe(request, { title: 'Delete confirm test' });
 
-    const recipe = new RecipePage(page);
     await recipe.goto(_id);
     await recipe.openDeleteModal();
     await expect(recipe.modal).toBeVisible();
@@ -45,10 +42,9 @@ test.describe('Delete recipe with confirmation modal', () => {
     expect(check.status()).toBe(404);
   });
 
-  test('clicking the dark overlay closes the modal without deleting', async ({ page, request }) => {
+  test('clicking the dark overlay closes the modal without deleting', async ({ recipe, request }) => {
     const { _id } = await createRecipe(request, { title: 'Delete overlay-dismiss test' });
 
-    const recipe = new RecipePage(page);
     await recipe.goto(_id);
     await recipe.openDeleteModal();
     await expect(recipe.modal).toBeVisible();

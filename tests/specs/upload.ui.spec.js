@@ -1,14 +1,12 @@
 // @ts-check
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('../fixtures');
 const path = require('path');
-const { RecipeFormPage } = require('../pages/RecipeFormPage');
 const { API, deleteRecipe } = require('../helpers/api');
 
 const FIXTURE_IMAGE = path.join(__dirname, '..', 'fixtures', 'test-image.jpg');
 
 test.describe('Image upload on the recipe form', () => {
-  test('selecting a file uploads it and shows a preview', async ({ page }) => {
-    const form = new RecipeFormPage(page);
+  test('selecting a file uploads it and shows a preview', async ({ form }) => {
     await form.gotoCreate();
 
     await form.uploadImage(FIXTURE_IMAGE);
@@ -17,8 +15,7 @@ test.describe('Image upload on the recipe form', () => {
     expect(src).toMatch(/^\/uploads\/.+\.jpg$/);
   });
 
-  test('uploaded image is reachable and persists with the new recipe', async ({ page, request }) => {
-    const form = new RecipeFormPage(page);
+  test('uploaded image is reachable and persists with the new recipe', async ({ page, form, request }) => {
     await form.gotoCreate();
 
     await form.uploadImage(FIXTURE_IMAGE);
@@ -50,8 +47,7 @@ test.describe('Image upload on the recipe form', () => {
     await deleteRecipe(request, created._id);
   });
 
-  test('non-image files are rejected with an error message', async ({ page }) => {
-    const form = new RecipeFormPage(page);
+  test('non-image files are rejected with an error message', async ({ form }) => {
     await form.gotoCreate();
 
     await form.uploadImage({

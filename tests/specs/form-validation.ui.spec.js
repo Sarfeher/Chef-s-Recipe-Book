@@ -6,13 +6,11 @@
 // fields are missing. The frontend reads emptyFields and applies a .error CSS
 // class to each input it names, and renders the error message under the form.
 
-const { test, expect } = require('@playwright/test');
-const { RecipeFormPage } = require('../pages/RecipeFormPage');
+const { test, expect } = require('../fixtures');
 const { API, deleteRecipe } = require('../helpers/api');
 
 test.describe('RecipeForm validation', () => {
-  test('submitting an empty form shows the error message and flags required fields', async ({ page }) => {
-    const form = new RecipeFormPage(page);
+  test('submitting an empty form shows the error message and flags required fields', async ({ page, form }) => {
     await form.gotoCreate();
 
     await form.submit();
@@ -26,8 +24,7 @@ test.describe('RecipeForm validation', () => {
     expect(await form.fieldHasError('cookingTime')).toBe(true);
   });
 
-  test('only the still-empty fields get the error class after a partial fill', async ({ page }) => {
-    const form = new RecipeFormPage(page);
+  test('only the still-empty fields get the error class after a partial fill', async ({ form }) => {
     await form.gotoCreate();
 
     await form.fill({ title: 'Partly filled recipe', ingredient: 'salt' });
@@ -40,8 +37,7 @@ test.describe('RecipeForm validation', () => {
     expect(await form.fieldHasError('cookingTime')).toBe(true);
   });
 
-  test('errors clear and the recipe saves once all required fields are valid', async ({ page, request }) => {
-    const form = new RecipeFormPage(page);
+  test('errors clear and the recipe saves once all required fields are valid', async ({ page, form, request }) => {
     await form.gotoCreate();
 
     await form.submit();

@@ -1,11 +1,9 @@
 // @ts-check
-const { test, expect } = require('@playwright/test');
-const { HomePage } = require('../pages/HomePage');
-const { RecipePage } = require('../pages/RecipePage');
+const { test, expect } = require('../fixtures');
 const { createRecipe, deleteRecipe } = require('../helpers/api');
 
 test.describe('Homepage', () => {
-  test('loads with navbar and renders recipe cards from the API', async ({ page, request }) => {
+  test('loads with navbar and renders recipe cards from the API', async ({ home, request }) => {
     // Make sure at least one recipe exists, so the assertion isn't a flake
     // if the DB has been wiped between runs.
     const seeded = await createRecipe(request, {
@@ -15,7 +13,6 @@ test.describe('Homepage', () => {
       instructions: 'Just exists so the homepage has something to render.',
     });
 
-    const home = new HomePage(page);
     await home.goto();
 
     await expect(home.addRecipeButton).toBeVisible();
@@ -25,16 +22,13 @@ test.describe('Homepage', () => {
     await deleteRecipe(request, seeded._id);
   });
 
-  test('clicking a recipe card navigates to its detail page', async ({ page, request }) => {
+  test('clicking a recipe card navigates to its detail page', async ({ page, home, recipe, request }) => {
     const { _id } = await createRecipe(request, {
       title: 'Click-through test recipe',
       imgURL: 'https://loremflickr.com/600/400/food?lock=998',
       ingredients: ['x'],
       instructions: 'Test recipe used to verify card navigation.',
     });
-
-    const home = new HomePage(page);
-    const recipe = new RecipePage(page);
 
     await home.goto();
     await home.openRecipe(_id);
