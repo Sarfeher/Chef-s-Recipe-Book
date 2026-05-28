@@ -9,20 +9,21 @@ test.describe.serial('Recipe CRUD flow', () => {
 
   const newRecipe = {
     title: 'CRUD Test Pizza',
-    ingredients: 'flour, tomato, mozzarella, basil',
+    ingredients: ['flour', 'tomato', 'mozzarella', 'basil'],
     instructions: 'Stretch, top, bake at 500F for 7 minutes.',
     cookingTime: 15,
     imgURL: 'https://example.com/pizza.jpg',
   };
 
-  test('CREATE — POST returns the new recipe with an _id', async ({ request }) => {
+  test('CREATE — POST returns 201 and the new recipe with an _id', async ({ request }) => {
     const response = await request.post('/api/recipes', { data: newRecipe });
 
-    expect(response.status()).toBe(200);
+    expect(response.status()).toBe(201);
 
     const body = await response.json();
     expect(body).toMatchObject({
       title: newRecipe.title,
+      ingredients: newRecipe.ingredients,
       instructions: newRecipe.instructions,
       cookingTime: newRecipe.cookingTime,
     });
@@ -61,5 +62,22 @@ test.describe.serial('Recipe CRUD flow', () => {
     // Verify it's actually gone:
     const getResponse = await request.get(`/api/recipes/${createdId}`);
     expect(getResponse.status()).toBe(404);
+  });
+});
+
+test.describe('POST /api/recipes input validation', () => {
+  test('rejects a string ingredients value with 400 instead of silently wrapping it', async ({ request }) => {
+    const response = await request.post('/api/recipes', {
+      data: {
+        title: 'Bad ingredients type',
+        ingredients: 'flour, tomato',
+        instructions: 'should not be created',
+        cookingTime: 5,
+      },
+    });
+
+    expect(response.status()).toBe(400);
+    const body = await response.json();
+    expect(body.error).toMatch(/ingredients must be an array/);
   });
 });
