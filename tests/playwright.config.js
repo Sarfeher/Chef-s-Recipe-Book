@@ -3,6 +3,7 @@ const { defineConfig, devices } = require('@playwright/test');
 
 const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:4000';
 const UI_BASE_URL = process.env.UI_BASE_URL || 'http://localhost:3000';
+const SLOWMO = Number(process.env.SLOWMO) || 0;
 
 module.exports = defineConfig({
   testDir: './specs',
@@ -27,6 +28,7 @@ module.exports = defineConfig({
       use: {
         baseURL: UI_BASE_URL,
         ...devices['Desktop Chrome'],
+        launchOptions: { slowMo: SLOWMO },
       },
     },
   ],
