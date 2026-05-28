@@ -105,6 +105,7 @@ const RecipeForm = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
                 className={emptyFields.includes('title') ? 'error' : ''}
+                data-testid="recipe-title-input"
             />
 
             <label>Picture URL:</label>
@@ -113,6 +114,7 @@ const RecipeForm = () => {
                 onChange={(e) => setImgURL(e.target.value)}
                 value={imgURL}
                 placeholder="Paste an image URL, or upload below"
+                data-testid="picture-url-input"
             />
 
             <label>Or upload an image:</label>
@@ -141,12 +143,16 @@ const RecipeForm = () => {
                 onChange={(e) => setIngredientsInput(e.target.value)}
                 value={ingredientsInput}
                 className={emptyFields.includes('ingredients') ? 'error' : ''}
+                data-testid="ingredient-input"
             />
-            <button onClick={(e) => {
-                e.preventDefault();
-                setIngredients([...ingredients, ingredientsInput]);
-                setIngredientsInput('');
-            }}>Add Ingredient</button>
+            <button
+                data-testid="add-ingredient-button"
+                onClick={(e) => {
+                    e.preventDefault();
+                    setIngredients([...ingredients, ingredientsInput]);
+                    setIngredientsInput('');
+                }}
+            >Add Ingredient</button>
 
             <label>Instructions:</label>
             <input
@@ -154,6 +160,7 @@ const RecipeForm = () => {
                 onChange={(e) => setInstructions(e.target.value)}
                 value={instructions}
                 className={emptyFields.includes('instructions') ? 'error' : ''}
+                data-testid="instructions-input"
             />
             <label>Cooking time (in minutes):</label>
             <input
@@ -162,8 +169,9 @@ const RecipeForm = () => {
                 value={cookingTime}
                 min={0}
                 className={emptyFields.includes('cookingTime') ? 'error' : ''}
+                data-testid="cooking-time-input"
             />
-            <button>{id ? 'Update Recipe' : 'Save Recipe'}</button>
+            <button data-testid="save-recipe-button">{id ? 'Update Recipe' : 'Save Recipe'}</button>
             {error && <div className="error">{error}</div>}
         </form>
     );
