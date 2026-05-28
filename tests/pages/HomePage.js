@@ -7,6 +7,7 @@ class HomePage {
     this.page = page;
     this.addRecipeButton = page.getByRole('button', { name: 'Add recipe' });
     this.recipeCards = page.locator('.recipe-details');
+    this.emptyState = page.getByTestId('empty-state');
   }
 
   async goto() {
