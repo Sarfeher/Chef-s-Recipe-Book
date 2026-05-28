@@ -5,12 +5,6 @@
 // The backend rejects POST /api/recipes with 400 + emptyFields when required
 // fields are missing. The frontend reads emptyFields and applies a .error CSS
 // class to each input it names, and renders the error message under the form.
-//
-// Quirk: the backend's check is `if (!ingredients)`, which is FALSE for the
-// frontend's initial state `[]` (empty arrays are truthy). So submitting a
-// fully empty form flags title/instructions/cookingTime but NOT ingredients.
-// The tests assert the actual observed behavior — see bug #5 in the project
-// notes if/when this gets fixed.
 
 const { test, expect } = require('@playwright/test');
 const { RecipeFormPage } = require('../pages/RecipeFormPage');
@@ -27,6 +21,7 @@ test.describe('RecipeForm validation', () => {
     await expect(page).toHaveURL(/\/create$/);
 
     expect(await form.fieldHasError('title')).toBe(true);
+    expect(await form.fieldHasError('ingredients')).toBe(true);
     expect(await form.fieldHasError('instructions')).toBe(true);
     expect(await form.fieldHasError('cookingTime')).toBe(true);
   });
@@ -35,11 +30,12 @@ test.describe('RecipeForm validation', () => {
     const form = new RecipeFormPage(page);
     await form.gotoCreate();
 
-    await form.fill({ title: 'Partly filled recipe' });
+    await form.fill({ title: 'Partly filled recipe', ingredient: 'salt' });
     await form.submit();
 
     await expect(form.errorMessage).toBeVisible();
     expect(await form.fieldHasError('title')).toBe(false);
+    expect(await form.fieldHasError('ingredients')).toBe(false);
     expect(await form.fieldHasError('instructions')).toBe(true);
     expect(await form.fieldHasError('cookingTime')).toBe(true);
   });
