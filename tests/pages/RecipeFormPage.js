@@ -1,6 +1,18 @@
 // @ts-check
+/** @typedef {import('@playwright/test').Page} Page */
+/** @typedef {Parameters<import('@playwright/test').Locator['setInputFiles']>[0]} InputFiles */
+
+/**
+ * @typedef {Object} RecipeFormFields
+ * @property {string} [title]
+ * @property {string} [pictureUrl]
+ * @property {string} [ingredient]
+ * @property {string} [instructions]
+ * @property {string|number} [cookingTime]
+ */
 
 class RecipeFormPage {
+  /** @param {Page} page */
   constructor(page) {
     this.page = page;
     this.titleInput = page.getByTestId('recipe-title-input');
@@ -19,6 +31,12 @@ class RecipeFormPage {
     await this.page.goto('/create');
   }
 
+  /** @param {string} id */
+  async gotoUpdate(id) {
+    await this.page.goto(`/update/${id}`);
+  }
+
+  /** @param {InputFiles} filePathOrPayload */
   async uploadImage(filePathOrPayload) {
     await this.imageUpload.setInputFiles(filePathOrPayload);
   }
@@ -28,8 +46,10 @@ class RecipeFormPage {
     return this.preview.getAttribute('src');
   }
 
-  async fill({ title, ingredient, instructions, cookingTime }) {
+  /** @param {RecipeFormFields} fields */
+  async fill({ title, pictureUrl, ingredient, instructions, cookingTime }) {
     if (title !== undefined) await this.titleInput.fill(title);
+    if (pictureUrl !== undefined) await this.pictureUrlInput.fill(pictureUrl);
     if (ingredient !== undefined) {
       await this.ingredientInput.fill(ingredient);
       await this.addIngredientButton.click();
