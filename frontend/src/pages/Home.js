@@ -15,6 +15,11 @@ const Home = () => {
     }, []);
     return (
         <div className="home">
+            {recipes && recipes.length === 0 && (
+                <p className="empty-state" data-testid="empty-state">
+                    No recipes yet. Use "Add recipe" to create your first one.
+                </p>
+            )}
             <div className="recipes">
                 {recipes && recipes.map((recipe) => (
                     <RecipeDetails key={recipe.id} recipe={recipe} />

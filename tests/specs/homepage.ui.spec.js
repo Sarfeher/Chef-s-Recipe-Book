@@ -22,6 +22,25 @@ test.describe('Homepage', () => {
     await deleteRecipe(request, seeded._id);
   });
 
+  test('shows the empty-state message when no recipes exist', async ({ page, home }) => {
+    // Stub the recipes endpoint with an empty list instead of wiping the real
+    // DB — that would race with the other tests running in parallel.
+    await page.route('**/api/recipes', async (route) => {
+      if (route.request().method() === 'GET') {
+        await route.fulfill({ status: 200, contentType: 'application/json', body: '[]' });
+      } else {
+        await route.continue();
+      }
+    });
+
+    await home.goto();
+
+    await expect(home.emptyState).toBeVisible();
+    await expect(home.emptyState).toHaveText(/No recipes yet/);
+    await expect(home.recipeCards).toHaveCount(0);
+    await expect(home.addRecipeButton).toBeVisible();
+  });
+
   test('clicking a recipe card navigates to its detail page', async ({ page, home, recipe, request }) => {
     const { _id } = await createRecipe(request, {
       title: 'Click-through test recipe',
